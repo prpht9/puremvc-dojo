@@ -170,6 +170,7 @@ Thanks
 ** dojo
 ** jasmine
 ** jasmine-species
+** jasmine-dom
 ** nagoro
 ** nokogiri
 ** rack
