@@ -94,6 +94,8 @@ dojo.declare
       {
         case MyMediator.SLIDER_X_CHANGED:
           // Take action on the change here
+          // maybe when the slider changes
+          // alter a chart
         break;
       }
     } 
@@ -102,7 +104,7 @@ dojo.declare
 MyMediator.SLIDER_X_CHANGED = "slider_x_changed";
 ```````````````````````````````````````````````````
 
-Remember your html must have a div with the example name below for dojo to know where to hook in: 'sliderx'. 
+Remember your html must have a div with the example name 'sliderx' for dojo to know what widget to connect. 
 
 Declarative
 -----------
@@ -150,7 +152,7 @@ Thanks
 * To everyone who contributed to all the tools I depend on every day. In all sincerity, thank you.
 * Cliff Hall - for PureMVC over in the ActionScript world, because MVC isn't just for server side
 * Michael Fellinger (manveru) - for Ramaze and the wonders it beholds
-* Jerremy Evans - for Sequel, the best ORM out there
+* Jeremy Evans - for Sequel, the best ORM out there
 * Jamis Buck - for the absolute best deployment tool, Capistrano
 * yorikpeterse, huma, pistos and all the others - for the excellent help in #ramaze on freenode
 * All the creators and contributors to the following,

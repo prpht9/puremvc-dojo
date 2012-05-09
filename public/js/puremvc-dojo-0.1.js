@@ -1,5 +1,5 @@
 /*
- PureMVC Javascript port for Dojo by Chris Scheper <cscheper@qcsilver.com>
+ PureMVC Javascript port for Dojo by Chris Scheper <prpht9@gmail.com>
  PureMVC - Copyright(c) 2006-2011 Futurescale, Inc., Some rights reserved.
  Your reuse is governed by the Creative Commons Attribution 3.0 License
 */
@@ -411,7 +411,7 @@ Facade.getInstance = function()
 	return Facade.instance;
 }
 /*
- PureMVC Javascript port for Prototype by Frederic Saunier <frederic.saunier@puremvc.org>
+ PureMVC Javascript port for Dojo by Chris Scheper <prpht9@gmail.com>
  PureMVC - Copyright(c) 2006-2011 Futurescale, Inc., Some rights reserved.
  Your reuse is governed by the Creative Commons Attribution 3.0 License
 */
@@ -580,7 +580,7 @@ dojo.declare
 	}
 );
 /*
- PureMVC Javascript port for Prototype by Frederic Saunier <frederic.saunier@puremvc.org>
+ PureMVC Javascript port for Dojo by Chris Scheper <prpht9@gmail.com>
  PureMVC - Copyright(c) 2006-2011 Futurescale, Inc., Some rights reserved.
  Your reuse is governed by the Creative Commons Attribution 3.0 License
 */
@@ -659,7 +659,7 @@ dojo.declare
 	}
 );
 /*
- PureMVC Javascript port for Prototype by Frederic Saunier <frederic.saunier@puremvc.org>
+ PureMVC Javascript port for Dojo by Chris Scheper <prpht9@gmail.com>
  PureMVC - Copyright(c) 2006-2011 Futurescale, Inc., Some rights reserved.
  Your reuse is governed by the Creative Commons Attribution 3.0 License
 */
@@ -807,7 +807,7 @@ dojo.declare
 );
 
 /*
- PureMVC Javascript port for Prototype by Frederic Saunier <frederic.saunier@puremvc.org>
+ PureMVC Javascript port for Dojo by Chris Scheper <prpht9@gmail.com>
  PureMVC - Copyright(c) 2006-2011 Futurescale, Inc., Some rights reserved.
  Your reuse is governed by the Creative Commons Attribution 3.0 License
 */
@@ -1022,7 +1022,7 @@ Controller.getInstance = function()
 	return Controller.instance;
 }
 /*
- PureMVC Javascript port for Prototype by Frederic Saunier <frederic.saunier@puremvc.org>
+ PureMVC Javascript port for Dojo by Chris Scheper <prpht9@gmail.com>
  PureMVC - Copyright(c) 2006-2011 Futurescale, Inc., Some rights reserved.
  Your reuse is governed by the Creative Commons Attribution 3.0 License
 */
@@ -1202,7 +1202,7 @@ Model.getInstance = function()
 	return Model.instance;
 }
 /*
- PureMVC Javascript port for Prototype by Frederic Saunier <frederic.saunier@puremvc.org>
+ PureMVC Javascript port for Dojo by Chris Scheper <prpht9@gmail.com>
  PureMVC - Copyright(c) 2006-2011 Futurescale, Inc., Some rights reserved.
  Your reuse is governed by the Creative Commons Attribution 3.0 License
 */
@@ -1519,7 +1519,7 @@ View.getInstance = function()
 	return View.instance;
 }
 /*
- PureMVC Javascript port for Prototype by Frederic Saunier <frederic.saunier@puremvc.org>
+ PureMVC Javascript port for Dojo by Chris Scheper <prpht9@gmail.com>
  PureMVC - Copyright(c) 2006-2011 Futurescale, Inc., Some rights reserved.
  Your reuse is governed by the Creative Commons Attribution 3.0 License
 */
@@ -1647,7 +1647,7 @@ dojo.declare
 	}
 );
 /*
- PureMVC Javascript port for Prototype by Frederic Saunier <frederic.saunier@puremvc.org>
+ PureMVC Javascript port for Dojo by Chris Scheper <prpht9@gmail.com>
  PureMVC - Copyright(c) 2006-2011 Futurescale, Inc., Some rights reserved.
  Your reuse is governed by the Creative Commons Attribution 3.0 License
 */
@@ -1684,7 +1684,7 @@ dojo.declare
 	}
 );
 /*
- PureMVC Javascript port for Prototype by Frederic Saunier <frederic.saunier@puremvc.org>
+ PureMVC Javascript port for Dojo by Chris Scheper <prpht9@gmail.com>
  PureMVC - Copyright(c) 2006-2011 Futurescale, Inc., Some rights reserved.
  Your reuse is governed by the Creative Commons Attribution 3.0 License
 */
@@ -1707,12 +1707,28 @@ dojo.declare
 dojo.declare
 ("Mediator", Notifier,
 	{
+		/**
+		 * @override
+		 *
+		 * construct a <code>Mediator</code> instance.
+		 *
+		 * @param {Function} $super
+		 * 		<em>Prototype.js</em> standard superclass reference handling.
+		 *
+		 * @param {String} mediatorName
+		 * 		The name of the <code>Mediator</code>.
+		 *
+		 * @param {Object} viewComponent
+		 * 		The <code>Mediator</code>'s view component.
+		 *
+		 */
 		constructor: function( mediatorName, viewComponent )
 		{
 			this.mediatorName = (mediatorName != null) ? mediatorName : Mediator.NAME;
 			this.viewComponent = viewComponent;
 			console.log("Mediator Initialized");
 		},
+
 		/**
 		 * The name of the <code>Mediator</code>.
 		 * 
@@ -1728,26 +1744,7 @@ dojo.declare
 		 * @private
 		 */
 		viewComponent: null,
-		
-		/**
-		 * @override
-		 *
-		 * Initialize a <code>Mediator</code> instance.
-		 *
-		 * @param {Function} $super
-		 * 		<em>Prototype.js</em> standard superclass reference handling.
-		 *
-		 * @param {String} mediatorName
-		 * 		The name of the <code>Mediator</code>.
-		 *
-		 * @param {Object} viewComponent
-		 * 		The <code>Mediator</code>'s view component.
-		 *
-		 */
-		initialize: function( mediatorName, viewComponent )
-		{
-		},
-		
+
 		/**
 		 * List the <code>Notification</code> names this
 		 * <code>Mediator</code> is interested in being notified of.
@@ -1829,7 +1826,7 @@ dojo.declare
  */
 Mediator.NAME = "Mediator";
 /*
- PureMVC Javascript port for Prototype by Frederic Saunier <frederic.saunier@puremvc.org>
+ PureMVC Javascript port for Dojo by Chris Scheper <prpht9@gmail.com>
  PureMVC - Copyright(c) 2006-2011 Futurescale, Inc., Some rights reserved.
  Your reuse is governed by the Creative Commons Attribution 3.0 License
 */
