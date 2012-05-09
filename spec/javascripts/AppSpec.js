@@ -21,7 +21,7 @@ feature('App startup', function() {
             app.start();
         });
         then('The ApplicationFacade should not be null', function() {
-            expect(app).not.toEqual(null);
+            expect(app instanceof Facade).toBeTruthy;
         });
     });
 
