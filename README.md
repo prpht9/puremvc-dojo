@@ -46,7 +46,14 @@ dojo.declare
     }
   }
 );
-//MyApp.INIT = 'init';
+MyApp.INIT = 'init';
+MyApp.getInstance = function()
+{
+        if( !MyApp.instance ){
+                MyApp.instance = new MyApp();
+        }
+        return MyApp.instance;
+}
 ```````````````````````````````````````````````````
 
 ### Programmatic Example - Recommended
@@ -119,7 +126,7 @@ And the magic to put in your layout template or wherever...
 ```````````````````````````````````````````````````
   dojo.ready(function(){
     console.log("Dojo: " + dojo.version + " loaded");
-    app = new MyAppName();
+    app = MyApp.getInstance();
     app.start();
   });
 ```````````````````````````````````````````````````

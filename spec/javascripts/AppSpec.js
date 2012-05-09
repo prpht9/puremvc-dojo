@@ -15,13 +15,13 @@ feature('App startup', function() {
             expect("Dojo: " + dojo.version + " loaded").toContain("1.7.2");
         });
         given('I can start the new Application', function() {
-            app = new Alice();
+            app = MyApp.getInstance();
         });
         when('I start the Application', function() {
             app.start();
         });
         then('The ApplicationFacade should not be null', function() {
-            expect(app.facade).not.toEqual(null);
+            expect(app).not.toEqual(null);
         });
     });
 

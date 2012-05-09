@@ -1,7 +1,7 @@
 
 // A quick helper function
 var sendNote = function(name, msg) {
-  var app = ApplicationFacade.getInstance();
+  var app = MyApp.getInstance();
   if(msg){
     console.log("sendNote: " + msg);
     app.sendNotification(name, msg);
@@ -49,39 +49,21 @@ dojo.declare
 );
 
 dojo.declare
-("ApplicationFacade", Facade,
+("MyApp", Facade,
   {
     constructor: function(){
-    },
-  }
-);
-ApplicationFacade.INIT = "init";
-
-ApplicationFacade.getInstance = function()
-{
-        if( !ApplicationFacade.instance ){
-                ApplicationFacade.instance = new ApplicationFacade();
-        }
-        return ApplicationFacade.instance;
-}
-
-dojo.declare
-("MyAppName", null,
-  {
-    constructor: function(){
-      console.log("Constructing MyAppName");
-      this.facade = ApplicationFacade.getInstance();
+      console.log("Constructing MyApp");
       this.components = {};
-      console.log("MyAppName Constructed");
+      console.log("MyApp Constructed");
     },
     facade: null,
     components: null,
     otherChart: null,
     start: function(){
-      console.log("Starting MyAppName");
-      this.facade.registerCommand(ApplicationFacade.INIT, InitCommand);
-      this.facade.sendNotification(ApplicationFacade.INIT, this, "Object");
-      console.log("MyAppName Running");
+      console.log("Starting MyApp");
+      //this.registerCommand(MyApp.INIT, InitCommand);
+      //this.sendNotification(MyApp.INIT, this, "Object");
+      console.log("MyApp Running");
     },
     add: function(id, obj){
       this.components[id] = obj;
@@ -94,3 +76,11 @@ dojo.declare
     }
   }
 );
+MyApp.INIT = "init";
+MyApp.getInstance = function()
+{
+        if( !MyApp.instance ){
+                MyApp.instance = new MyApp();
+        }
+        return MyApp.instance;
+}
