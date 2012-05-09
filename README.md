@@ -144,7 +144,7 @@ cd puremvc-dojo # and let rvm do the rest
 Story
 =====
 
-Originally intended for use in a Nitro/Og web application, puremvc-dojo has been designed and developed on [Ramaze](http://ramaze.net/)/[Sequel](http://sequel.rubyforge.org/) using [Cucumber](http://cukes.info/)/[Rspec](http://rspec.info/)/[Webrat](https://github.com/brynary/webrat)/[Selenium-WebDriver](http://seleniumhq.org/docs/03_webdriver.html) for server side testing and [Jasmine-Species](http://rudylattae.github.com/jasmine-species/)/[Jasmine](http://pivotal.github.com/jasmine/)/[Selenium-WebDriver](http://rudylattae.github.com/jasmine-species/) for client side testing. As you can tell we like Behavior Driven Development (BDD) around here. Don't release without it.
+Originally intended for use in a Nitro/Og web application, puremvc-dojo has been designed and developed on [Ramaze](http://ramaze.net/)/[Sequel](http://sequel.rubyforge.org/) using [Cucumber](http://cukes.info/)/[Rspec](http://rspec.info/)/[Webrat](https://github.com/brynary/webrat)/[Selenium-WebDriver](http://seleniumhq.org/docs/03_webdriver.html) for server side testing and [Jasmine-Species](http://rudylattae.github.com/jasmine-species/)/[Jasmine](http://pivotal.github.com/jasmine/)/[Selenium-WebDriver](http://seleniumhq.org/docs/03_webdriver.html) for client side testing. As you can tell we like Behavior Driven Development (BDD) around here. Don't release without it.
 
 Thanks
 ======
