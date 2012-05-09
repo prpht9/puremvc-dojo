@@ -14,7 +14,7 @@ Go to your project directory and...
 wget --no-check-certificate https://raw.github.com/prpht9/puremvc-dojo/master/public/js/puremvc-dojo-0.1.js public/js
 ```````````````````````````````````````````````````
 
-Your done. the puremvc-dojo-0.1.js file is now available for inclusion into your project. Use the ApplicationFacade.getInstance() method in your Application and Bob's your uncle.
+Your done. the puremvc-dojo-0.1.js file is now available for inclusion into your project. Use the Facade as your parent class and Bob's your uncle.
 
 Skeleton Implementation 
 -----------------------
@@ -142,7 +142,7 @@ cd puremvc-dojo # and let rvm do the rest
 Story
 =====
 
-Originally intended for use in a Nitro/Og web application, puremvc-dojo has been designed and developed on "Ramaze":http://ramaze.net/ / "Sequel":http://sequel.rubyforge.org/ using "Cucumber":http://cukes.info/ / "Rspec":http://rspec.info/ / "Webrat":https://github.com/brynary/webrat / "Selenium-WebDriver":http://seleniumhq.org/docs/03_webdriver.html for server side testing and "Jasmine-Species":http://rudylattae.github.com/jasmine-species/ / "Jasmine":http://pivotal.github.com/jasmine/ / "Selenium-WebDriver":http://rudylattae.github.com/jasmine-species/ for client side testing. As you can tell we like Behavior Driven Development (BDD) around here. Don't release without it.
+Originally intended for use in a Nitro/Og web application, puremvc-dojo has been designed and developed on [Ramaze](http://ramaze.net/)/[Sequel](http://sequel.rubyforge.org/) using [Cucumber](http://cukes.info/)/[Rspec](http://rspec.info/)/[Webrat](https://github.com/brynary/webrat)/[Selenium-WebDriver](http://seleniumhq.org/docs/03_webdriver.html) for server side testing and [Jasmine-Species](http://rudylattae.github.com/jasmine-species/)/[Jasmine](http://pivotal.github.com/jasmine/)/[Selenium-WebDriver](http://rudylattae.github.com/jasmine-species/) for client side testing. As you can tell we like Behavior Driven Development (BDD) around here. Don't release without it.
 
 Thanks
 ======
