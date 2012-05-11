@@ -11,7 +11,8 @@ Getting Started
 Go to your project directory and...
 
 ```````````````````````````````````````````````````
-wget --no-check-certificate https://raw.github.com/prpht9/puremvc-dojo/master/public/js/puremvc-dojo.js public/js
+cd public/js
+wget --no-check-certificate https://raw.github.com/prpht9/puremvc-dojo/master/public/js/puremvc-dojo.js
 ```````````````````````````````````````````````````
 
 Your done. the puremvc-dojo-0.1.js file is now available for inclusion into your project. Use the Facade as your parent class and Bob's your uncle.

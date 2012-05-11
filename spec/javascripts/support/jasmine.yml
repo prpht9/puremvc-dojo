@@ -16,7 +16,7 @@
 src_files:
     - public/js/dojoConfig.js
     - public/js/dojo.js
-    - public/js/puremvc-dojo-0.1.js
+    - public/js/puremvc-dojo.js
     - public/js/app.js
 
 # stylesheets
