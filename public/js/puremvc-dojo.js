@@ -1753,10 +1753,7 @@ dojo.declare
 		 * 		The list of notifications names in which is interested the
 		 * 		<code>Mediator</code>.
 		 */
-		listNotificationInterests: function()
-		{
-			return [];
-		},
+		listNotificationInterests: function() { },
 		
 		/**
 		 * Get the name of the <code>Mediator</code>.
