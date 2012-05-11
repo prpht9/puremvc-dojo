@@ -41,7 +41,7 @@ dojo.declare
 		{
 
 			if( Facade.instance ){
-				throw Warn( Facade.SINGLETON_MSG );
+				console.log("Facade Singleton Already Instantiated");
 				return this;
 			}
 
