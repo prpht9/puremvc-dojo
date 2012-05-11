@@ -32,8 +32,8 @@ feature('App startup', function() {
         var blockSlider;
         given('BlockSlider is started', function() {
             loadFixtures('fixtures/block_slider.html');
-            //movingBlock = document.getElementById('moving-block');
-            //blockSlider = document.getElementById('block-slider');
+            movingBlock = document.getElementById('moving-block');
+            blockSlider = document.getElementById('block-slider');
             dojo.ready(function(){
             });
             blockSliderApp = BlockSlider.getInstance();

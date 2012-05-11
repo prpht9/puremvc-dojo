@@ -284,7 +284,6 @@ dojo.declare
 		 */
 		registerMediator: function( mediator )
 		{
-			console.log(this.view);
 			this.view.registerMediator(mediator);
 		},
 		

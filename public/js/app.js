@@ -49,6 +49,7 @@ dojo.declare
     } 
   } 
 );
+BlockMediator.NAME = "BlockMediator";
 BlockMediator.BLOCK_SLIDER_CHANGED = "block-slider-changed";
 
 dojo.declare
@@ -141,7 +142,7 @@ dojo.declare
     start: function(){
       console.log("Starting BlockSlider");
       this.add('moving-block', dojo.byId('moving-block'));
-      this.registerMediator(new BlockMediator('BlockMediator', this.get('moving-block')));
+      this.registerMediator(new BlockMediator(BlockMediator.NAME, this.get('moving-block')));
       console.log("BlockSlider Running");
     },
     add: function(id, obj){
