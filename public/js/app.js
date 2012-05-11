@@ -9,6 +9,44 @@ var sendNote = function(name, msg) {
 };
 
 dojo.declare
+("BlockMediator", Mediator,
+  {
+    constructor: function( mediatorName, viewComponent ){
+      this.createBlockSlider();
+    },
+    createBlockSlider: function(){
+      var blockSlider = new dijit.form.HorizontalSlider({
+        name: "block-slider",
+        minimum: 1,
+        maximum: 5,
+        value: 1,
+        intermediateChanges: true,
+      }, "block-slider");
+      dojo.connect(blockSlider, "onChange", function(evt){
+        this.sendNotification(BlockMediator.BLOCK_SLIDER_CHANGED, evt);
+      });
+      blockSlider.startup();
+    },
+    listNotificationInterests: function(){
+      return [
+        BlockMediator.BLOCK_SLIDER_CHANGED,
+      ];
+    },
+    handleNotification: function( note ) {
+      switch ( note.getName() )
+      {
+        case BlockMediator.BLOCK_SLIDER_CHANGED:
+          console.log("Block Slider Changed");
+          // this.viewComponent.blah
+          // maybe when the slider changes
+          // alter a chart
+        break;
+      }
+    }
+  }
+);
+
+dojo.declare
 ("ProxyPrepCommand", SimpleCommand,
   {
     constructor: function(note){
@@ -84,3 +122,38 @@ MyApp.getInstance = function()
         }
         return MyApp.instance;
 }
+
+dojo.declare
+("BlockSlider", Facade,
+  {
+    constructor: function(){
+      console.log("Constructing BlockSlider");
+      this.components = {};
+      console.log("BlockSlider Constructed");
+    },
+    components: null,
+    start: function(){
+      console.log("Starting BlockSlider");
+      this.add('moving-block', dojo.byId('moving-block'));
+      this.registerMediator(new BlockMediator('BlockMediator', this.get('moving-block')));
+      console.log("BlockSlider Running");
+    },
+    add: function(id, obj){
+      this.components[id] = obj;
+    },
+    get: function(id){
+      return this.components[id];
+    },
+    remove: function(id){
+      delete this.components[id];
+    }
+  }
+);
+BlockSlider.getInstance = function()
+{
+        if( !BlockSlider.instance ){
+                BlockSlider.instance = new BlockSlider();
+        }
+        return BlockSlider.instance;
+}
+

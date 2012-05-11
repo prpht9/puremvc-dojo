@@ -46,6 +46,8 @@ helpers:
     - lib/Namespace.js
     - lib/jasmine-grammar.js
     - lib/jasmine-reporting.js
+    - lib/jasmine-dom-fixtures.js
+    - lib/jasmine-dom-matchers.js
     - helpers/**/*.js
 
 # spec_files

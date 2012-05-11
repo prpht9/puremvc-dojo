@@ -1,4 +1,4 @@
-feature('App startup', function() {
+feature('Skeleton App Startup', function() {
     summary(
         'As a prospective customer',
         'I want a slick javascript application',
@@ -25,6 +25,26 @@ feature('App startup', function() {
         });
     });
 
+    scenario('The Mediator is registered', function() {
+        var blockSliderApp;
+        var mediator;
+        var movingBlock;
+        var blockSlider;
+        given('BlockSlider is started', function() {
+            loadFixtures('fixtures/block_slider.html');
+            movingBlock = document.getElementById('moving-block');
+            blockSlider = document.getElementById('block-slider');
+            dojo.ready(function(){
+            });
+            blockSliderApp = BlockSlider.getInstance();
+            blockSliderApp.start();
+        });
+        when('I retrieve the Mediator', function() {
+            mediator = blockSliderApp.retrieveMediator('BlockMediator');
+        });
+        then('The Mediator should be a Mediator', function() {
+            expect(mediator instanceof Mediator).toBeTruthy;
+        });
+    });
+
 });
-
-
