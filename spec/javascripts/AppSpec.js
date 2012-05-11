@@ -28,12 +28,7 @@ feature('App startup', function() {
     scenario('The Mediator is registered', function() {
         var blockSliderApp;
         var mediator;
-        var movingBlock;
-        var blockSlider;
         given('BlockSlider is started', function() {
-            loadFixtures('fixtures/block_slider.html');
-            movingBlock = document.getElementById('moving-block');
-            blockSlider = document.getElementById('block-slider');
             dojo.ready(function(){
             });
             blockSliderApp = BlockSlider.getInstance();
@@ -44,6 +39,51 @@ feature('App startup', function() {
         });
         then('The Mediator should be a Mediator', function() {
             expect(mediator instanceof Mediator).toBeTruthy;
+        });
+    });
+
+    scenario('The Slider moves the Block', function() {
+        var blockSliderApp;
+        var mediator;
+        var blockElement;
+        var sliderElement;
+        var blockSlider;
+        var fixtures;
+        given('We have our content', function() {
+            dojo.ready(function(){
+            });
+            loadFixtures('fixtures/block_slider.html');
+            fixtures = document.getElementById('jasmine-fixtures');
+            expect(fixtures).toHaveId('jasmine-fixtures');
+            blockElement = document.getElementById('moving-block');
+            expect(blockElement).toHaveId('moving-block');
+            sliderElement = document.getElementById('block-slider');
+            expect(sliderElement).toHaveId('block-slider');
+        });
+        given('We create the block slider widget', function() {
+            blockSlider = new dijit.form.HorizontalSlider({
+              name: "block-slider",
+              minimum: 1,
+              maximum: 5,
+              value: 1,
+              intermediateChanges: true,
+            }, "block-slider");
+            blockSlider.startup();
+        });
+        given('BlockSlider is started', function() {
+            //movingBlock = document.getElementById('moving-block');
+            //blockSlider = document.getElementById('block-slider');
+            blockSliderApp = BlockSlider.getInstance();
+            blockSliderApp.start();
+        });
+        when('I retrieve the Mediator', function() {
+            mediator = blockSliderApp.retrieveMediator('BlockMediator');
+        });
+        then('The Mediator should be a Mediator', function() {
+            expect(mediator instanceof Mediator).toBeTruthy;
+        });
+        then('The moving block should be in position 1', function() {
+            expect(blockElement).toHaveText("Slide Me");
         });
     });
 

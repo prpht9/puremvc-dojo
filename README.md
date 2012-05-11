@@ -12,6 +12,9 @@ Go to your project directory and...
 
 ```````````````````````````````````````````````````
 cd public/js
+#### Optionally download the full Dojo Toolkit
+# wget http://download.dojotoolkit.org/release-1.7.2/dojo-release-1.7.2.tar.gz
+# tar xzvf dojo-release-1.7.2.tar.gz
 wget --no-check-certificate https://raw.github.com/prpht9/puremvc-dojo/master/public/js/puremvc-dojo.js
 ```````````````````````````````````````````````````
 
