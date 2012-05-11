@@ -34,20 +34,20 @@
  *
  * @constructor
  */
+console.log("Processing Facade");
 dojo.declare
 ("Facade", null,
 	{
 		constructor: function()
 		{
-
 			if( Facade.instance ){
-				console.log("Facade Singleton Already Instantiated");
+				console.log("WARN: Facade Exists Already");
 				return this;
 			}
-
 			this.initializeFacade();
                         console.log("Facade Initialized");
 		},
+
 		/**
 		 * The <code>View</code> singleton.
 		 *
@@ -73,13 +73,6 @@ dojo.declare
 		controller: null,
 
 		/**
-		 * Initialize a <code>Facade</code> instance.
-		 */
-		initialize: function()
-		{
-		},
-		
-		/**
 		 * @private
 		 * Called automatically by the constructor.
 		 * Initialize the Singleton <code>Facade</code> instance.
@@ -96,7 +89,7 @@ dojo.declare
 			this.initializeController();
 			this.initializeView();
 		},
-		
+
 		/**
 		 * @private
 		 * Initialize the <code>Model</code>.
@@ -383,6 +376,7 @@ dojo.declare
 		}
 	}
 );
+console.log("Processed Facade");
 
 /**
  * @constant
@@ -456,6 +450,7 @@ Facade.getInstance = function()
  * 
  * @constructor
  */
+console.log("Processing Notification");
 dojo.declare
 ("Notification", null,
 	{
@@ -613,6 +608,7 @@ dojo.declare
  * 
  * @constructor
  */
+console.log("Processing Notifier");
 dojo.declare
 ("Notifier", null,
 	{
@@ -690,6 +686,7 @@ dojo.declare
  * 
  * @constructor
  */
+console.log("Processing Observer");
 dojo.declare
 ("Observer", null,
 	{
@@ -854,6 +851,7 @@ dojo.declare
  * 
  * @constructor
  */
+console.log("Processing Controller");
 dojo.declare
 ("Controller", null,
 	{
@@ -1055,6 +1053,7 @@ Controller.getInstance = function()
  * 
  * @constructor
  */
+console.log("Processing Model");
 dojo.declare
 ("Model", null,
 	{
@@ -1234,6 +1233,7 @@ Model.getInstance = function()
  * 
  * @constructor
  */
+console.log("Processing View");
 dojo.declare
 ("View", null,
 	{
@@ -1410,11 +1410,13 @@ dojo.declare
 			
 			// Register Mediator as an observer for each of its notification interests
 			var interests/*Array*/ = mediator.listNotificationInterests();
-                        if ( interests.length ){
-                          for(var i = 0; i < interests.length; i++) function(interest){
-                            //console.log(interest);
-                          }
-                        }
+                        //  May need to remove this later -prpht9
+                        //if ( interests.length ){
+                        //  for(var i = 0; i < interests.length; i++) function(interest){
+                        //    //console.log(interest);
+                        //  }
+                        //}
+
 			var len/*Number*/ = interests.length;
 			if( len )
 			{
@@ -1549,6 +1551,7 @@ View.getInstance = function()
  * 
  * @constructor
  */
+console.log("Processing MacroCommand");
 dojo.declare
 ("MacroCommand", Notifier,
 	{
@@ -1664,6 +1667,7 @@ dojo.declare
  *
  * @constructor
  */
+console.log("Processing SimpleCommand");
 dojo.declare
 ("SimpleCommand", Notifier,
 	{
@@ -1704,6 +1708,7 @@ dojo.declare
  * 
  * @constructor
  */
+console.log("Processing Mediator");
 dojo.declare
 ("Mediator", Notifier,
 	{
@@ -1753,7 +1758,10 @@ dojo.declare
 		 * 		The list of notifications names in which is interested the
 		 * 		<code>Mediator</code>.
 		 */
-		listNotificationInterests: function() { },
+		listNotificationInterests: function()
+		{
+			return [];
+		},
 		
 		/**
 		 * Get the name of the <code>Mediator</code>.
@@ -1853,6 +1861,7 @@ Mediator.NAME = "Mediator";
  * 
  * @constructor
  */
+console.log("Processing Proxy");
 dojo.declare
 ("Proxy", Notifier,
 	{
@@ -1954,3 +1963,4 @@ dojo.declare
  * @constant
  */
 Proxy.NAME = "Proxy";
+

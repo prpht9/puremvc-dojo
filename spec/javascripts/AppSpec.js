@@ -1,4 +1,4 @@
-feature('Skeleton App Startup', function() {
+feature('App startup', function() {
     summary(
         'As a prospective customer',
         'I want a slick javascript application',
@@ -48,3 +48,5 @@ feature('Skeleton App Startup', function() {
     });
 
 });
+
+

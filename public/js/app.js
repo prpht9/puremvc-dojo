@@ -1,7 +1,10 @@
+dojo.require("dojo.io.script");
+dojo.io.script.get({url: "http://ajax.googleapis.com/ajax/libs/dojo/1.7.2/dojo/dojo.js"});
+dojo.require("dijit.form.HorizontalSlider");
 
 // A quick helper function
 var sendNote = function(name, msg) {
-  var app = MyApp.getInstance();
+  var app = ApplicationFacade.getInstance();
   if(msg){
     console.log("sendNote: " + msg);
     app.sendNotification(name, msg);
@@ -19,7 +22,7 @@ dojo.declare
         name: "block-slider",
         minimum: 1,
         maximum: 5,
-        value: 1,
+        value: 1,  
         intermediateChanges: true,
       }, "block-slider");
       dojo.connect(blockSlider, "onChange", function(evt){
@@ -42,9 +45,10 @@ dojo.declare
           // alter a chart
         break;
       }
-    }
-  }
+    } 
+  } 
 );
+BlockMediator.BLOCK_SLIDER_CHANGED = "block-slider-changed";
 
 dojo.declare
 ("ProxyPrepCommand", SimpleCommand,
@@ -65,8 +69,8 @@ dojo.declare
     },
     execute: function(note){
       var app = note.getBody();
-      app.add("conversation", new HelpConversation("conversation"));
-      this.facade.registerMediator(new HelpMediator(HelpMediator.NAME, app.get("conversation")));
+      //app.add("conversation", new HelpConversation("conversation"));
+      //this.facade.registerMediator(new HelpMediator(HelpMediator.NAME, app.get("conversation")));
       console.log("MediatorPrepCommand Initialized");
     }
   }
@@ -99,8 +103,8 @@ dojo.declare
     otherChart: null,
     start: function(){
       console.log("Starting MyApp");
-      //this.registerCommand(MyApp.INIT, InitCommand);
-      //this.sendNotification(MyApp.INIT, this, "Object");
+      this.registerCommand(MyApp.INIT, InitCommand);
+      this.sendNotification(MyApp.INIT, this, "Object");
       console.log("MyApp Running");
     },
     add: function(id, obj){
