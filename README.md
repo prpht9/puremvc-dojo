@@ -28,12 +28,13 @@ dojo.declare
   {
     constructor: function(){
       this.components = {};
+      this.initializeFacade();
       console.log("MyApp Constructed");
     },
     components: null,
     start: function(){
-      //this.facade.registerCommand(MyApp.INIT, InitCommand);
-      //this.facade.sendNotification(MyApp.INIT, this, "Object");
+      //this.add('block-slider', dijit.byId('block-slider'));
+      //this.registerMediator(new BlockSliderMediator(BlockSliderMediator.NAME, this.get('block-slider')));
       console.log("MyApp Running");
     },
     add: function(id, obj){
@@ -72,44 +73,32 @@ This Mediator could be a part of app.js or it's own .js file.
 
 ```````````````````````````````````````````````````
 dojo.declare
-("MyMediator", Mediator,
+("BlockSliderMediator", Mediator,
   {
-    constructor: function(obj){
-      this.interests = [
-        MyMediator.SLIDER_X_CHANGED,
-      ];
-      var app = ApplicationFacade.getInstance();
-      this.createSliderX();
-    },
-    createSliderX: function(){
-      var sliderX = new dijit.form.HorizontalSlider({
-        name: "sliderx",
-        minimum: 1,
-        maximum: 100,
-        value: 50,  
-        intermediateChanges: true,
-      }, "sliderx");
-      dojo.connect(sliderX, "onChange", function(evt){
-        app.sendNotification(MyMediator.SLIDER_X_CHANGED, evt);
+    constructor: function(mediatorName, viewComponent){
+      dojo.connect(viewComponent, "onChange", function(evt){
+        app.sendNotification(BlockSliderMediator.BLOCK_SLIDER_CHANGED, evt);
       });
-      sliderX.startup();
     },
     listNotificationInterests: function(){
-      return this.interests;
+      return [
+        BlockSliderMediator.BLOCK_SLIDER_CHANGED,
+      ];
     },
     handleNotification: function( note ) {
       switch ( note.getName() )
       {
-        case MyMediator.SLIDER_X_CHANGED:
+        case BlockSliderMediator.BLOCK_SLIDER_CHANGED:
           // Take action on the change here
-          // maybe when the slider changes
+          // maybe when the block-slider/viewComponent changes
           // alter a chart
         break;
       }
     } 
   } 
 );
-MyMediator.SLIDER_X_CHANGED = "slider_x_changed";
+BlockSliderMediator.NAME = "BlockSliderMediator";
+BlockSliderMediator.BLOCK_SLIDER_CHANGED = "block_slider_changed";
 ```````````````````````````````````````````````````
 
 Remember your html must have a div with the example name 'sliderx' for dojo to know what widget to connect. 
@@ -117,7 +106,7 @@ Remember your html must have a div with the example name 'sliderx' for dojo to k
 Declarative
 -----------
 
-Unable to get working as well with observers: examples may or may not be forthcoming.
+Unable to get working as well with dojo observer hooks: examples may or may not be forthcoming.
 
 Last Step
 ---------
