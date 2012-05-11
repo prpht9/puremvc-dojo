@@ -1,6 +1,7 @@
+//dojo.require(["dojo/parser"]);
 //dojo.require("dojo.io.script");
 //dojo.io.script.get({url: "http://ajax.googleapis.com/ajax/libs/dojo/1.7.2/dojo/dojo.js"});
-//dojo.require("dijit.form.HorizontalSlider");
+dojo.require("dijit.form.HorizontalSlider");
 
 // A quick helper function
 var sendNote = function(name, msg) {
@@ -133,6 +134,7 @@ dojo.declare
     constructor: function(){
       console.log("Constructing BlockSlider");
       this.components = {};
+      this.initializeFacade();
       console.log("BlockSlider Constructed");
     },
     components: null,

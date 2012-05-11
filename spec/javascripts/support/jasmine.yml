@@ -11,11 +11,13 @@
 #   - dist/**/*.js
 #    Move this one down and uncomment if you download your own copy of dojo
 #    Make sure it's at the top of the list before puremvc-dojo and app.js
-#    - public/js/dojo-release-1.7.2/dojo/dojo.js
+#    - /public/js/dojo.js
+#    - /public/js/dojo-release-1.7.2/dojo/dojo.js
+#    - http://ajax.googleapis.com/ajax/libs/dojo/1.7.2/dojo/dojo.js
 #
 src_files:
     - public/js/dojoConfig.js
-    - public/js/dojo.js
+    - public/js/dojo-release-1.7.2/dojo/dojo.js
     - public/js/puremvc-dojo.js
     - public/js/app.js
 

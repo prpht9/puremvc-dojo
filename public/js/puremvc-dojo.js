@@ -86,8 +86,8 @@ dojo.declare
 		initializeFacade: function()
 		{
 			this.initializeModel();
-			this.initializeController();
 			this.initializeView();
+			this.initializeController();
 		},
 
 		/**
@@ -169,6 +169,7 @@ dojo.declare
 			if( !this.view ){
 				this.view = View.getInstance();
 			}
+                        //console.log(this.view);
 		},
 		
 		/**
@@ -283,6 +284,7 @@ dojo.declare
 		 */
 		registerMediator: function( mediator )
 		{
+			console.log(this.view);
 			this.view.registerMediator(mediator);
 		},
 		
@@ -486,22 +488,6 @@ dojo.declare
 		type: null,
 
 		/**
-		 * Initialize a <code>Notification</code> instance.
-		 *
-		 * @param {String} name
-		 * 		The name of the notification.
-		 *
-		 * @param {Object} body
-		 * 		(optional) Body data to send with the notification.
-		 * 
-		 * @param {String} type (optional)
-		 * 		Type identifier of the notification.
-		 */
-		initialize: function( name, body, type )
-		{			
-		},
-		
-		/**
 		 * Get the name of the <code>Notification</code> instance.
 		 *
 		 * @return {String}
@@ -626,13 +612,6 @@ dojo.declare
 		facade: null,
 
 		/**
-		 * Initialize a <code>Notifier</code> instance.
-		 */
-		initialize: function()
-		{
-		},
-		
-		/**
 		 * Create and send a <code>Notification</code>.
 		 *
 		 * <P>
@@ -711,21 +690,6 @@ dojo.declare
 		 * @private
 		 */
 		context: null,
-		
-		/**
-		 * Initialize an <code>Observer</code> instance.
-		 *
-		 * @param {Function} notifyMethod
-		 * 		The notification method of the interested object.
-		 * 
-		 * @param {Object} notifyContext
-		 * 		The notification context of the interested object.
-		 */
-		initialize: function( notifyMethod, notifyContext )
-		{
-			this.setNotifyMethod( notifyMethod );
-			this.setNotifyContext( notifyContext );
-		},
 		
 		/**
 		 * Get the notification method.
@@ -862,6 +826,7 @@ dojo.declare
 			}
 
 			this.commandMap = {};
+			this.view = View.getInstance();
 			this.initializeController();
 			console.log("Controller Initialized");
 		},
@@ -883,32 +848,15 @@ dojo.declare
 		commandMap: null,
 
 		/**
-		 * Initialize a <code>Controller</code> instance.
-		 * 
-		 * @throws {Error}
-		 * 		Throws an error if an instance for this singleton has already
-		 * 		been constructed.
+		 * Initialize the singleton <code>Controller</code> instance.
+		 *
+		 * <P>
+		 * Called automatically by the constructor. This
+		 * is the opportunity to initialize the singleton
+		 * instance in a subclass without overriding the
+		 * constructor.
 		 */
-		initialize: function()
-		{
-			if( Controller.instance ){
-				throw Error( Controller.SINGLETON_MSG );
-			}
-
-			this.commandMap = {};
-			this.initializeController();
-		},
-
-		/**
-		 * Called automatically by the constructor.
-		 * Retains a reference to the <code>View</code> singleton.
-		 * 
-		 * @private
-		 */
-		initializeController: function()
-		{
-			this.view = View.getInstance();
-		},
+		initializeController: function() {},
 
 		/**
 		 * If a <code>Command</code> has previously been registered to handle
@@ -1015,7 +963,8 @@ Controller.getInstance = function()
 {
 	if( !Controller.instance ){
 		Controller.instance = new Controller();
-			}
+		console.log("Controller Instance Created");
+	}
 
 	return Controller.instance;
 }
@@ -1075,17 +1024,6 @@ dojo.declare
 		 * @private
 		 */
 		proxyMap: null,
-
-		/**
-		 * Initialize a <code>Model</code> instance.
-		 * 
-		 * @throws {Error}
-		 * 		Throws an error if an instance for this singleton has already
-		 * 		been constructed.
-		 */
-		initialize: function()
-		{
-		},
 
 		/**
 		 * Register a <code>Proxy</code> with the <code>Model</code>.
@@ -1184,7 +1122,7 @@ Model.SINGLETON_MSG = "Model Singleton already constructed!";
  * @type {Model}
  * @private
  */
-Model.instance = new Model();
+Model.instance = null;
 
 /**
  * Retrieve the singleton instance of the <code>Model</code>.
@@ -1196,7 +1134,8 @@ Model.getInstance = function()
 {
 	if( !Model.instance ){
 		Model.instance = new Model();
-			}
+		console.log("Model Instance Created");
+	}
 
 	return Model.instance;
 }
@@ -1267,17 +1206,6 @@ dojo.declare
 		 * @type {Object}
 		 */
 		observerMap: null,
-
-		/**
-		 * Initialize a <code>View</code> instance.
-		 * 
-		 * @throws {Error}
-		 * 		Throws an error if an instance for this singleton has already
-		 * 		been constructed.
-		 */
-		initialize: function()
-		{
-		},
 
 		/**
 		 * Initialize the singleton <code>View</code> instance.
@@ -1515,9 +1443,10 @@ View.instance = null;
  */
 View.getInstance = function()
 {
-	if( View.instance == null ){
+	if( !View.instance ){
 		View.instance = new View();
-			}
+		console.log("View Instance Created");
+	}
 	return View.instance;
 }
 /*
@@ -1568,18 +1497,6 @@ dojo.declare
 		 * @private
 		 */
 		subCommands: null,
-
-		/**
-		 * @override
-		 *
-		 * Initialize a <code>MacroCommand</code> instance.
-		 * 
-		 * @param {Function} $super
-		 * 		<em>Prototype.js</em> standard superclass reference handling.
-		 */
-		initialize: function( )
-		{
-		},
 
 		/**
 		 * Initialize the <code>MacroCommand</code>.
@@ -1886,24 +1803,6 @@ dojo.declare
 		 * @private
 		 */
 		proxyName: null,
-		
-		/**
-		 * @override
-		 *
-		 * Initialize a <code>Proxy</code> instance.
-		 *
-		 * @param {Function} $super
-		 * 		<em>Prototype.js</em> standard superclass reference handling.
-		 *
-		 * @param {String} proxyName
-		 * 		The name of the <code>Proxy</code>.
-		 *
-		 * @param {Object} data
-		 * 		An initial data object to be held by the <code>Proxy</code>.
-		 */
-		initialize: function( proxyName, data )
-		{
-		},
 		
 		/**
 		 * Gets the proxyName.
