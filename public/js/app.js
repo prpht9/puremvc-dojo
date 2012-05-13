@@ -13,44 +13,55 @@ var sendNote = function(name, msg) {
 };
 
 dojo.declare
-("BlockMediator", Mediator,
+("SliderMediator", Mediator,
   {
     constructor: function( mediatorName, viewComponent ){
-      this.createBlockSlider();
-    },
-    createBlockSlider: function(){
-      var blockSlider = new dijit.form.HorizontalSlider({
-        name: "block-slider",
-        minimum: 1,
-        maximum: 5,
-        value: 1,  
-        intermediateChanges: true,
-      }, "block-slider");
-      dojo.connect(blockSlider, "onChange", function(evt){
-        this.sendNotification(BlockMediator.BLOCK_SLIDER_CHANGED, evt);
+      var app = BlockSlider.getInstance();
+      dojo.connect(viewComponent, "onChange", function(evt){
+        app.sendNotification(SliderMediator.SLIDER_CHANGED, evt);
       });
-      blockSlider.startup();
     },
     listNotificationInterests: function(){
       return [
-        BlockMediator.BLOCK_SLIDER_CHANGED,
       ];
     },
     handleNotification: function( note ) {
       switch ( note.getName() )
       {
-        case BlockMediator.BLOCK_SLIDER_CHANGED:
-          console.log("Block Slider Changed");
-          // this.viewComponent.blah
-          // maybe when the slider changes
-          // alter a chart
+      }
+    } 
+  } 
+);
+SliderMediator.NAME = "SliderMediator";
+SliderMediator.SLIDER_CHANGED = "slider-changed";
+
+dojo.declare
+("BlockMediator", Mediator,
+  {
+    constructor: function( mediatorName, viewComponent ){
+      console.log("View Component");
+      console.log(viewComponent);
+    },
+    listNotificationInterests: function(){
+      return [
+        SliderMediator.SLIDER_CHANGED,
+      ];
+    },
+    handleNotification: function( note ) {
+      switch ( note.getName() )
+      {
+        case SliderMediator.SLIDER_CHANGED:
+          console.log("Slider Changed");
+          console.log(this.viewComponent);
+          var v = "" + note.getBody() + "px";
+          console.log(v);
+          dojo.style(this.viewComponent, "left", v);
         break;
       }
     } 
   } 
 );
 BlockMediator.NAME = "BlockMediator";
-BlockMediator.BLOCK_SLIDER_CHANGED = "block-slider-changed";
 
 dojo.declare
 ("ProxyPrepCommand", SimpleCommand,
@@ -142,7 +153,9 @@ dojo.declare
     start: function(){
       console.log("Starting BlockSlider");
       this.add('moving-block', dojo.byId('moving-block'));
+      this.add('block-slider', dijit.byId('block-slider'));
       this.registerMediator(new BlockMediator(BlockMediator.NAME, this.get('moving-block')));
+      this.registerMediator(new SliderMediator(SliderMediator.NAME, this.get('block-slider')));
       console.log("BlockSlider Running");
     },
     add: function(id, obj){

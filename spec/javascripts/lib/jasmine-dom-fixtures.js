@@ -153,17 +153,21 @@ jasmine.Fixtures.prototype= {
     console.log("jasmine.Fixtures.prototype=#_getFixtureHtml");
     console.log("url");
     console.log(url);
-    console.log("_fixturesCache");
-    console.log(this._fixturesCache);
-    console.log("_fixturesCache[url]");
-    console.log(this._fixturesCache[url]);
     if (url in this._fixturesCache){
       console.log("_fixturesCache");
       console.log(this._fixturesCache);
     }
     else {
       console.log("url not in cache... loading");
+      console.log("_fixturesCache");
+      console.log(this._fixturesCache);
       this._loadFixtureIntoCache(url);
+    };
+    if (url in this._fixturesCache){
+      console.log("URL correctly in _fixturesCache");
+    }
+    else {
+      console.log("URL still not present when it should be");
     };
     return this._fixturesCache[url];
   },
@@ -177,23 +181,32 @@ jasmine.Fixtures.prototype= {
     console.log("my._fixturesCache");
     console.log(my._fixturesCache);
     var xhr = new jasmine.Fixtures.XHR();
-    xhr.open('GET', url, true);
+    xhr.open('GET', url, false);
     
     xhr.onreadystatechange= function()
     {
       if (4!==xhr.readyState){
+        console.log("xhr not in readyState");
         return;
       };
       var status= xhr.status;
+      console.log("xhr.status");
+      console.log(xhr.status);
       var succeeded= 0===status || (status>=200 && status<300) || 304==status;
       
       if (!succeeded){
         throw new Error('Failed to load resource: status=' + status + ' url=' + url);
       };
+      console.log("xhr.responseText");
+      console.log(xhr.responseText);
       my._fixturesCache[url]= xhr.responseText;  
+      console.log("my._fixturesCache");
+      console.log(my._fixturesCache);
       xhr.onreadystatechange= null;
       xhr= null;
     }
+    console.log("my._fixturesCache");
+    console.log(my._fixturesCache);
     xhr.send(null);
   },
 

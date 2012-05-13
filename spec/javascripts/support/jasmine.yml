@@ -33,6 +33,7 @@ src_files:
 #   - stylesheets/*.css
 #
 stylesheets:
+    - public/css/block_slider.css
 
 # helpers
 #
