@@ -7,13 +7,6 @@ feature('App startup', function() {
 
     scenario('The app bootstraps and is running', function() {
         var app;
-        given('Dojo is started', function() {
-            dojo.ready(function(){
-            });
-        });
-        then('Dojo version should be available', function() {
-            expect("Dojo: " + dojo.version + " loaded").toContain("1.7.2");
-        });
         given('I can start the new Application', function() {
             app = MyApp.getInstance();
         });
@@ -26,28 +19,18 @@ feature('App startup', function() {
     });
 
     scenario('The Slider and Block are setup', function() {
-        var blockSliderApp;
+        var app;
         var mediator;
-        var blockElement;
+        var block;
         var blockStyle;
-        var sliderElement;
-        var blockSlider;
-        var fixtures;
+        var slider;
         given('We have our content', function() {
-            dojo.ready(function(){
-            });
             loadFixtures('fixtures/block_slider.html');
-            fixtures = document.getElementById('jasmine-fixtures');
-            expect(fixtures).toHaveId('jasmine-fixtures');
-            //blockElement = document.getElementById('moving-block');
-            blockElement = dojo.byId('moving-block');
-            expect(blockElement).toHaveId('moving-block');
-            //sliderElement = document.getElementById('block-slider');
-            sliderElement = dojo.byId('block-slider');
-            expect(sliderElement).toHaveId('block-slider');
+            block = dojo.byId('moving-block');
+            blockStyle = dojo.style(block);
         });
         given('We create the block slider widget', function() {
-            blockSlider = new dijit.form.HorizontalSlider({
+            slider = new dijit.form.HorizontalSlider({
               name: "block-slider",
               minimum: 0,
               maximum: 500,
@@ -55,33 +38,41 @@ feature('App startup', function() {
               intermediateChanges: true,
               //discreteValues: 6,
             }, "block-slider");
-            blockSlider.startup();
+            slider.startup();
         });
         given('BlockSlider is started', function() {
-            blockSliderApp = BlockSlider.getInstance();
-            blockSliderApp.start();
+            app = BlockSlider.getInstance();
+            app.start();
         });
         then('I retrieve the Mediator', function() {
-            mediator = blockSliderApp.retrieveMediator('BlockMediator');
+            mediator = app.retrieveMediator('BlockMediator');
         });
         then('The Mediator should be a Mediator', function() {
             expect(mediator instanceof Mediator).toBeTruthy;
         });
         then('The moving block should be in position 0', function() {
-            expect(blockElement).toHaveText("Slide Me!");
-            blockStyle = dojo.style(blockElement);
-            console.log("Block Style");
-            console.log("Left: " + blockStyle["left"]);
-            expect(blockStyle["left"]).toBe("0px");
+            expect(block).toHaveText("Slide Me!");
+            expect(blockStyle["left"]).toEqual("0px");
         });
         then('I move slider to position 1', function() {
-            blockSlider.set('value', 100);
+            slider.set('value', 100);
         });
-        then('The block blah', function() {
-            blockStyle = dojo.style(blockSliderApp.get('moving-block'));
-            console.log("Block Style2");
-            console.log("Left: " + blockStyle["left"]);
-            expect(blockStyle["left"]).toBe("100px");
+        // Wait for the async onChange event to process
+        waitsFor(function() {
+            if ( blockStyle["left"] === "100px" ) { return true };
+        }, "Style never changed", 250);
+        then('The block moved to position 1', function() {
+            expect(blockStyle["left"]).toEqual("100px");
+        });
+        then('I move slider to position 2', function() {
+            slider.set('value', 200);
+        });
+        // Wait for the async onChange event to process
+        waitsFor(function() {
+            if ( blockStyle["left"] === "200px" ) { return true };
+        }, "Style never changed", 250);
+        then('The block moved to position 2', function() {
+            expect(blockStyle["left"]).toEqual("200px");
         });
     });
 

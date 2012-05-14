@@ -1,9 +1,16 @@
 // Sample Custom Matcher
 beforeEach(function() {
-  this.addMatchers({
-    toBeSomething: function(expected) {
-      var something = this.actual;
-      return something.someMethod === expected;
+    dojo.ready(function(){
+    });
+    //loadFixtures('fixtures/block_slider.html');
+    toHaveStyle: function(expected) {
+      //var style = dojo.style(this.actual)
+      //var val = style[key];
+      var style = this.actual;
+      return style === expected;
     }
   });
+});
+
+afterEach(function() {
 });

@@ -39,8 +39,7 @@ dojo.declare
 ("BlockMediator", Mediator,
   {
     constructor: function( mediatorName, viewComponent ){
-      console.log("View Component");
-      console.log(viewComponent);
+      // mediatorName and viewComponent set and used by parent contructor
     },
     listNotificationInterests: function(){
       return [
@@ -51,10 +50,8 @@ dojo.declare
       switch ( note.getName() )
       {
         case SliderMediator.SLIDER_CHANGED:
-          console.log("Slider Changed");
-          console.log(this.viewComponent);
           var v = "" + note.getBody() + "px";
-          console.log(v);
+          console.log("Slider Value: " + v);
           dojo.style(this.viewComponent, "left", v);
         break;
       }
