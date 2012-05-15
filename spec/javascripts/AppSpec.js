@@ -1,4 +1,4 @@
-feature('App startup', function() {
+feature('PureMVC Application Works', function() {
     summary(
         'As a prospective customer',
         'I want a slick javascript application',
@@ -18,7 +18,7 @@ feature('App startup', function() {
         });
     });
 
-    scenario('The Slider and Block are setup', function() {
+    scenario('The Mediator and Notifications work', function() {
         var app;
         var mediator;
         var block;
@@ -73,6 +73,54 @@ feature('App startup', function() {
         }, "Style never changed", 250);
         then('The block moved to position 2', function() {
             expect(blockStyle["left"]).toEqual("200px");
+        });
+    });
+
+    scenario('The Simple and Macro Commands work', function() {
+        var app;
+        var block;
+        var slider;
+        given('We have our content', function() {
+            loadFixtures('fixtures/label_changer.html');
+            block = dojo.byId('changing-label');
+        });
+        given('We create the block slider widget', function() {
+            slider = new dijit.form.HorizontalSlider({
+              name: "label-slider",
+              minimum: 0,
+              maximum: 500,
+              value: 0,
+              intermediateChanges: true,
+              //discreteValues: 6,
+            }, "label-slider");
+            slider.startup();
+        });
+        given('LabelChanger is started', function() {
+            app = LabelChanger.getInstance();
+            app.start();
+        });
+        then('The label should have text 0', function() {
+            expect(block["innerHTML"]).toEqual("0");
+        });
+        then('I move slider to position 1', function() {
+            slider.set('value', 100);
+        });
+        // Wait for the async onChange event to process
+        waitsFor(function() {
+            if ( block["innerHTML"] === "100" ) { return true };
+        }, "Text never changed", 250);
+        then('The text is now 100', function() {
+            expect(block["innerHTML"]).toEqual("100");
+        });
+        then('I move slider to position 2', function() {
+            slider.set('value', 200);
+        });
+        // Wait for the async onChange event to process
+        waitsFor(function() {
+            if ( block["innerHTML"] === "200" ) { return true };
+        }, "Text never changed", 250);
+        then('The block moved to position 2', function() {
+            expect(block["innerHTML"]).toEqual("200");
         });
     });
 

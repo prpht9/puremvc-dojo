@@ -21,6 +21,7 @@ src_files:
     - public/js/puremvc-dojo.js
     - public/js/app.js
     - public/js/block_slider.js
+    - public/js/label_changer.js
 
 # stylesheets
 #
