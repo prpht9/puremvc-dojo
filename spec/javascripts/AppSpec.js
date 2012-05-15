@@ -143,8 +143,8 @@ feature('PureMVC Application Works', function() {
             }, "proxy-slider");
             slider.startup();
         });
-        given('UseProxy is started', function() {
-            app = UseProxy.getInstance();
+        given('ProxyChanger is started', function() {
+            app = ProxyChanger.getInstance();
             app.start();
         });
         then('The label should have text 0', function() {

@@ -1,18 +1,21 @@
 dojo.require("dijit.form.HorizontalSlider");
 
 dojo.declare
-("UseSliderMediator", Mediator,
+("ProxySliderMediator", Mediator,
   {
     constructor: function( mediatorName, viewComponent ){
-      this.app = UseProxy.getInstance();
+      this.app = ProxyChanger.getInstance();
       this.objProxy = this.app.retrieveProxy(MockObjectProxy.NAME);
       dojo.connect(viewComponent, "onChange", function(evt){
-        var data = this.objProxy.getData();
+        var app = ProxyChanger.getInstance();
+        var objProxy = app.retrieveProxy(MockObjectProxy.NAME);
+        var data = objProxy.getData();
         data["favoriteObject"] = evt;
-        this.objProxy.setData(data);
+        objProxy.setData(data);
       });
     },
     app: null,
+    objProxy: null,
     listNotificationInterests: function(){
       return [
       ];
@@ -24,19 +27,15 @@ dojo.declare
     } 
   } 
 );
-UseSliderMediator.NAME = "UseSliderMediator";
-console.log("UseSliderMediator Processed");
+ProxySliderMediator.NAME = "ProxySliderMediator";
+ProxySliderMediator.PROXY_SLIDER_CHANGED = "proxy-slider-changed";
 
 dojo.declare
-("UseLabelMediator", Mediator,
+("ProxyMediator", Mediator,
   {
     constructor: function( mediatorName, viewComponent ){
       // mediatorName and viewComponent set and used by parent contructor
-      this.app = UseProxy.getInstance();
-      this.objProxy = this.app.retrieveProxy(MockObjectProxy.NAME);
     },
-    app: null,
-    objProxy: null,
     listNotificationInterests: function(){
       return [
         MockObjectProxy.DATA_UPDATED,
@@ -46,28 +45,26 @@ dojo.declare
       switch ( note.getName() )
       {
         case MockObjectProxy.DATA_UPDATED:
-          var data = this.proxy.data();
-          console.log("UseSlider Value: " + data["favoriteObject"]);
-          this.viewComponent["innerHTML"] = data["favoriteObject"]);
+          var data = note.getBody();
+          console.log("MockObject Updated: note.getBody");
+          console.log(data);
+          this.viewComponent["innerHTML"] = data["favoriteObject"];
         break;
       }
     } 
   } 
 );
-UseLabelMediator.NAME = "UseLabelMediator";
-console.log("UseLabelMediator Processed");
+ProxyMediator.NAME = "ProxyMediator";
 
 dojo.declare
 ("MockObjectProxy", Proxy,
   {
     constructor: function(proxyName, data){
-      this.sendNotification(DATA_UPDATED, this);
+      this.sendNotification(MockObjectProxy.DATA_UPDATED, this.data);
     },
     setData: function(data){
       this.data = data;
-      this.sendNotification(DATA_UPDATED, this);
-    },
-    getData: function(){
+      this.sendNotification(MockObjectProxy.DATA_UPDATED, this.data);
     }
   }
 );
@@ -77,21 +74,20 @@ MockObjectProxy.DEFAULT_DATA = {};
 console.log("MockObjectProxy Processed");
 
 dojo.declare
-("UseProxyPrepCommand", SimpleCommand,
+("ProxySliderPrepCommand", SimpleCommand,
   {
     constructor: function(note){
     },
     execute: function(note){
       var app = note.getBody();
       app.registerProxy(new MockObjectProxy(MockObjectProxy.NAME, MockObjectProxy.DEFAULT_DATA));
-      console.log("UseProxyPrepCommand Initialized");
+      console.log("ProxySliderPrepCommand Initialized");
     }
   }
 );
-console.log("UseProxyPrepCommand Processed");
 
 dojo.declare
-("UseMediatorPrepCommand", SimpleCommand,
+("ProxyMediatorPrepCommand", SimpleCommand,
   {
     constructor: function(){
     },
@@ -99,43 +95,42 @@ dojo.declare
       var app = note.getBody();
       app.add('label-proxy', dojo.byId('label-proxy'));
       app.add('proxy-slider', dijit.byId('proxy-slider'));
-      app.registerMediator(new UseLabelMediator(UseLabelMediator.NAME, app.get('label-proxy')));
-      app.registerMediator(new UseSliderMediator(UseSliderMediator.NAME, app.get('proxy-slider')));
-      console.log("UseMediatorPrepCommand Initialized");
+      app.registerMediator(new ProxyMediator(ProxyMediator.NAME, app.get('label-proxy')));
+      app.registerMediator(new ProxySliderMediator(ProxySliderMediator.NAME, app.get('proxy-slider')));
+      console.log("ProxyMediatorPrepCommand Initialized");
     }
   }
 );
-console.log("UseMediatorPrepCommand Processed");
 
 dojo.declare
-("InitUseProxy", MacroCommand,
+("InitProxyChanger", MacroCommand,
   {
     constructor: function(){
+      
     },
     initializeMacroCommand: function(note){
-      this.addSubCommand(UseProxyPrepCommand);
-      this.addSubCommand(UseMediatorPrepCommand);
-      console.log("InitUseProxy Initialized");
+      this.addSubCommand(ProxySliderPrepCommand);
+      this.addSubCommand(ProxyMediatorPrepCommand);
+      console.log("InitProxyChanger Initialized");
     }
   }
 );
-console.log("InitUseProxy Processed");
 
 dojo.declare
-("UseProxy", Facade,
+("ProxyChanger", Facade,
   {
     constructor: function(){
-      console.log("Constructing UseProxy");
+      console.log("Constructing ProxyChanger");
       this.components = {};
       this.initializeFacade();
-      console.log("UseProxy Constructed");
+      console.log("ProxyChanger Constructed");
     },
     components: null,
     start: function(){
-      console.log("Starting UseProxy");
-      this.registerCommand(UseProxy.INIT, InitUseProxy);
-      this.sendNotification(UseProxy.INIT, this, "Object");
-      console.log("UseProxy Running");
+      console.log("Starting ProxyChanger");
+      this.registerCommand(ProxyChanger.INIT, InitProxyChanger);
+      this.sendNotification(ProxyChanger.INIT, this, "Object");
+      console.log("ProxyChanger Running");
     },
     add: function(id, obj){
       this.components[id] = obj;
@@ -148,13 +143,12 @@ dojo.declare
     }
   }
 );
-UseProxy.INIT = 'init';
-UseProxy.getInstance = function()
+ProxyChanger.INIT = 'init';
+ProxyChanger.getInstance = function()
 {
-        if( !UseProxy.instance ){
-                UseProxy.instance = new UseProxy();
+        if( !ProxyChanger.instance ){
+                ProxyChanger.instance = new ProxyChanger();
         }
-        return UseProxy.instance;
+        return ProxyChanger.instance;
 }
-console.log("UseProxy Processed");
 
