@@ -63,7 +63,7 @@ MyApp.getInstance = function()
 
 ### Programmatic Example - Recommended
 
-Beyond the skeleton Application Facade we can create a PureMVC Mediator to handle events which it registers an interest.
+Beyond the skeleton Application Facade we can create a PureMVC Mediator to handle events which it registers as interests.
 
 * Create the Widget to exhibit behavior
 * Create the Mediator for the Widget
@@ -75,36 +75,95 @@ Beyond the skeleton Application Facade we can create a PureMVC Mediator to handl
 This Mediator could be a part of app.js or it's own .js file.
 
 ```````````````````````````````````````````````````
+dojo.require("dijit.form.HorizontalSlider");
+
 dojo.declare
-("BlockSliderMediator", Mediator,
+("SliderMediator", Mediator,
   {
-    constructor: function(mediatorName, viewComponent){
+    constructor: function( mediatorName, viewComponent ){
+      var app = BlockSlider.getInstance();
       dojo.connect(viewComponent, "onChange", function(evt){
-        app.sendNotification(BlockSliderMediator.BLOCK_SLIDER_CHANGED, evt);
+        app.sendNotification(SliderMediator.SLIDER_CHANGED, evt);
       });
     },
     listNotificationInterests: function(){
       return [
-        BlockSliderMediator.BLOCK_SLIDER_CHANGED,
       ];
     },
     handleNotification: function( note ) {
       switch ( note.getName() )
       {
-        case BlockSliderMediator.BLOCK_SLIDER_CHANGED:
-          // Take action on the change here
-          // maybe when the block-slider/viewComponent changes
-          // alter a chart
+      }
+    } 
+  } 
+);
+SliderMediator.NAME = "SliderMediator";
+SliderMediator.SLIDER_CHANGED = "slider-changed";
+
+dojo.declare
+("BlockMediator", Mediator,
+  {
+    constructor: function( mediatorName, viewComponent ){
+    },
+    listNotificationInterests: function(){
+      return [
+        SliderMediator.SLIDER_CHANGED,
+      ];
+    },
+    handleNotification: function( note ) {
+      switch ( note.getName() )
+      {
+        case SliderMediator.SLIDER_CHANGED:
+          var v = "" + note.getBody() + "px";
+          console.log("Slider Value: " + v);
+          dojo.style(this.viewComponent, "left", v);
         break;
       }
     } 
   } 
 );
-BlockSliderMediator.NAME = "BlockSliderMediator";
-BlockSliderMediator.BLOCK_SLIDER_CHANGED = "block_slider_changed";
+BlockMediator.NAME = "BlockMediator";
+
+dojo.declare
+("BlockSlider", Facade,
+  {
+    constructor: function(){
+      console.log("Constructing BlockSlider");
+      this.components = {};
+      this.initializeFacade();
+      console.log("BlockSlider Constructed");
+    },
+    components: null,
+    start: function(){
+      console.log("Starting BlockSlider");
+      this.add('moving-block', dojo.byId('moving-block'));
+      this.add('block-slider', dijit.byId('block-slider'));
+      this.registerMediator(new BlockMediator(BlockMediator.NAME, this.get('moving-block')));
+      this.registerMediator(new SliderMediator(SliderMediator.NAME, this.get('block-slider')));
+      console.log("BlockSlider Running");
+    },
+    add: function(id, obj){
+      this.components[id] = obj;
+    },
+    get: function(id){
+      return this.components[id];
+    },
+    remove: function(id){
+      delete this.components[id];
+    }
+  }
+);
+BlockSlider.getInstance = function()
+{
+        if( !BlockSlider.instance ){
+                BlockSlider.instance = new BlockSlider();
+        }
+        return BlockSlider.instance;
+}
+
 ```````````````````````````````````````````````````
 
-Remember your html must have a div with the example name 'sliderx' for dojo to know what widget to connect. 
+Remember your html must have divs with the names 'moving-block' and 'block-slider' for dojo to find the widget to connect. 
 
 Declarative
 -----------
@@ -129,7 +188,7 @@ This will start you application and hook it into your rendered web content, as i
 Dependencies
 ------------
 
-These can either be loaded by gem command or letting rvm do all the work. This project includes .rvmrc and .gems files to manage gem dependancies. All you need to do is cd into the directory and tell rvm to trust this project. Gemset @puremvc-dojo is used.
+These can either be loaded by gem command or letting rvm do all the work. This project includes .rvmrc and .gems files to manage gem dependancies. All you need to do is cd into the directory and tell rvm to trust this project. Gemset 1.9.2@puremvc-dojo is used.
 
 ```````````````````````````````````````````````````
 gem install rake jasmine
