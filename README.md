@@ -3,20 +3,22 @@ puremvc-dojo
 
 PureMVC Dojo Implementation
 
-Dojo is a great library for building web applications, PureMVC is an excellent Model/View/Controller framework for client side applications. Lets see how the two work out together.  Remember: HTML = Content, CSS = Look/Feel/Layout, JavaScript = Behavior.
+Dojo is a great library for building web applications, [PureMVC](http://puremvc.org/) is an excellent Model/View/Controller framework for client side applications. Lets see how the two work out together.  Remember: HTML = Content, CSS = Look/Feel/Layout, JavaScript = Behavior.
+
+We do assume you know what the PureMVC Framwork is, why it should be used and conceptually how to implement an application within the Framework. (prior Javascript development experience recommended)
 
 Getting Started
 ---------------
 
 Go to your project directory and...
 
-```````````````````````````````````````````````````
+````````````````````````````````````````````````````````````````````````````````
 cd public/js
 #### Optionally download the full Dojo Toolkit
 # wget http://download.dojotoolkit.org/release-1.7.2/dojo-release-1.7.2.tar.gz
 # tar xzvf dojo-release-1.7.2.tar.gz
 wget --no-check-certificate https://raw.github.com/prpht9/puremvc-dojo/master/public/js/puremvc-dojo.js
-```````````````````````````````````````````````````
+````````````````````````````````````````````````````````````````````````````````
 
 Your done. the puremvc-dojo-0.1.js file is now available for inclusion into your project. Use the Facade as your parent class and Bob's your uncle.
 
@@ -25,7 +27,7 @@ Skeleton Implementation
 
 As bare bones as it can be with zero functionality added, here is a sample application and the commands to put in dojo.ready. We recommend putting the following snippet in public/js/init.js or something equivalent. This example is included in the project as well.
 
-```````````````````````````````````````````````````
+````````````````````````````````````````````````````````````````````````````````
 dojo.declare
 ("MyApp", Facade,
   {
@@ -59,7 +61,7 @@ MyApp.getInstance = function()
         }
         return MyApp.instance;
 }
-```````````````````````````````````````````````````
+````````````````````````````````````````````````````````````````````````````````
 
 ### Programmatic Example - Recommended
 
@@ -74,7 +76,7 @@ Beyond the skeleton Application Facade we can create a PureMVC Mediator to handl
 
 This Mediator could be a part of app.js or it's own .js file.
 
-```````````````````````````````````````````````````
+````````````````````````````````````````````````````````````````````````````````
 dojo.require("dijit.form.HorizontalSlider");
 
 dojo.declare
@@ -161,7 +163,7 @@ BlockSlider.getInstance = function()
         return BlockSlider.instance;
 }
 
-```````````````````````````````````````````````````
+````````````````````````````````````````````````````````````````````````````````
 
 Remember your html must have divs with the names 'moving-block' and 'block-slider' for dojo to find the widget to connect. 
 
@@ -175,13 +177,13 @@ Last Step
 
 And the magic to put in your layout template or wherever...
 
-```````````````````````````````````````````````````
+````````````````````````````````````````````````````````````````````````````````
   dojo.ready(function(){
     console.log("Dojo: " + dojo.version + " loaded");
     app = MyApp.getInstance();
     app.start();
   });
-```````````````````````````````````````````````````
+````````````````````````````````````````````````````````````````````````````````
 
 This will start you application and hook it into your rendered web content, as instructed, to enable all your behavior.
 
@@ -190,15 +192,16 @@ Dependencies
 
 These can either be loaded by gem command or letting rvm do all the work. This project includes .rvmrc and .gems files to manage gem dependancies. All you need to do is cd into the directory and tell rvm to trust this project. Gemset 1.9.2@puremvc-dojo is used.
 
-```````````````````````````````````````````````````
+````````````````````````````````````````````````````````````````````````````````
 gem install rake jasmine
-```````````````````````````````````````````````````
+````````````````````````````````````````````````````````````````````````````````
 
 or
 
-```````````````````````````````````````````````````
+````````````````````````````````````````````````````````````````````````````````
 cd puremvc-dojo # and let rvm do the rest
-```````````````````````````````````````````````````
+````````````````````````````````````````````````````````````````````````````````
+
 
 Story
 =====

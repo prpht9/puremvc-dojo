@@ -22,6 +22,7 @@ src_files:
     - public/js/app.js
     - public/js/block_slider.js
     - public/js/label_changer.js
+    - public/js/use_proxy.js
 
 # stylesheets
 #

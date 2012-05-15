@@ -124,6 +124,54 @@ feature('PureMVC Application Works', function() {
         });
     });
 
+    scenario('The Proxy works with Mediators and Commands', function() {
+        var app;
+        var block;
+        var slider;
+        given('We have our content', function() {
+            loadFixtures('fixtures/use_proxy.html');
+            block = dojo.byId('label-proxy');
+        });
+        given('We create the block slider widget', function() {
+            slider = new dijit.form.HorizontalSlider({
+              name: "proxy-slider",
+              minimum: 0,
+              maximum: 500,
+              value: 0,
+              intermediateChanges: true,
+              //discreteValues: 6,
+            }, "proxy-slider");
+            slider.startup();
+        });
+        given('UseProxy is started', function() {
+            app = UseProxy.getInstance();
+            app.start();
+        });
+        then('The label should have text 0', function() {
+            expect(block["innerHTML"]).toEqual("0");
+        });
+        then('I move slider to position 1', function() {
+            slider.set('value', 100);
+        });
+        // Wait for the async onChange event to process
+        waitsFor(function() {
+            if ( block["innerHTML"] === "100" ) { return true };
+        }, "Text never changed", 250);
+        then('The text is now 100', function() {
+            expect(block["innerHTML"]).toEqual("100");
+        });
+        then('I move slider to position 2', function() {
+            slider.set('value', 200);
+        });
+        // Wait for the async onChange event to process
+        waitsFor(function() {
+            if ( block["innerHTML"] === "200" ) { return true };
+        }, "Text never changed", 250);
+        then('The block moved to position 2', function() {
+            expect(block["innerHTML"]).toEqual("200");
+        });
+    });
+
 });
 
 
