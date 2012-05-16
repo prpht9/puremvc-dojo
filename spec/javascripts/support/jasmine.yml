@@ -20,9 +20,10 @@ src_files:
     - public/js/dojo-release-1.7.2/dojo/dojo.js
     - public/js/puremvc-dojo.js
     - public/js/app.js
-    - public/js/use_proxy.js
     - public/js/block_slider.js
     - public/js/label_changer.js
+    - public/js/use_proxy.js
+    - public/js/advanced_app.js
 
 # stylesheets
 #
@@ -37,6 +38,7 @@ src_files:
 #
 stylesheets:
     - public/css/block_slider.css
+    - public/css/advanced_app.css
 
 # helpers
 #

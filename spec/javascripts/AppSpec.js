@@ -174,4 +174,64 @@ feature('PureMVC Application Works', function() {
 
 });
 
+feature('Advanced Application Works', function() {
+    summary(
+        'As a business owner',
+        'I need insight into my customers',
+        'To help me meet their needs and keep them as customers'
+    );
+
+    scenario('The app bootstraps and is running', function() {
+        var app;
+        given('I can start the new Application', function() {
+            app = AdvancedApp.getInstance();
+        });
+        when('I start the Application', function() {
+            app.start();
+        });
+        then('The ApplicationFacade should not be null', function() {
+            expect(app instanceof Facade).toBeTruthy;
+        });
+    });
+
+    scenario('Conversation not started', function() {
+        var conversation;
+        var conversationStyle;
+        var interactionPoints;
+        given('Conversation and interactionPoint are ready', function() {
+            loadFixtures('fixtures/advanced_app.html');
+            conversation = dojo.byId('conversation');
+            conversationStyle = dojo.style(conversation);
+            interactionPoints = dojo.query('help-icon');
+        });
+        given('Advanced App is started', function() {
+            app = AdvancedApp.getInstance();
+            app.start();
+        });
+        then('The conversation should be in position 0', function() {
+            expect(conversationStyle["left"]).toEqual("-15984px");
+        });
+    });
+
+    scenario('Conversation Interest Indicated', function() {
+        var conversation;
+        var conversationStyle;
+        var interactionPoints;
+        given('Conversation and interactionPoint are ready', function() {
+            loadFixtures('fixtures/advanced_app.html');
+            conversation = dojo.byId('conversation');
+            conversationStyle = dojo.style(conversation);
+            interactionPoints = dojo.query('help-icon');
+        });
+        given('Advanced App is started', function() {
+            app = AdvancedApp.getInstance();
+            app.start();
+        });
+        when('An interest point has a mouseover', function() {
+            
+        });
+    });
+
+});
+
 
