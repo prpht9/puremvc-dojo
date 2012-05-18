@@ -1,30 +1,29 @@
 dojo.require("dijit.form.HorizontalSlider");
 
 dojo.declare
+("UpdateFavoriteObjectCommand", SimpleCommand,
+  {
+    constructor: function(note){
+    },
+    execute: function(note){
+      var app = ProxyChanger.getInstance();
+      var objProxy = app.retrieveProxy(MockObjectProxy.NAME);
+      var data = objProxy.getData();
+      data["favoriteObject"] = note.getBody();
+      objProxy.setData(data);
+    }
+  }
+);
+
+dojo.declare
 ("ProxySliderMediator", Mediator,
   {
     constructor: function( mediatorName, viewComponent ){
-      this.app = ProxyChanger.getInstance();
-      this.objProxy = this.app.retrieveProxy(MockObjectProxy.NAME);
       dojo.connect(viewComponent, "onChange", function(evt){
         var app = ProxyChanger.getInstance();
-        var objProxy = app.retrieveProxy(MockObjectProxy.NAME);
-        var data = objProxy.getData();
-        data["favoriteObject"] = evt;
-        objProxy.setData(data);
+        app.sendNotification(ProxySliderMediator.PROXY_SLIDER_CHANGED, evt);
       });
-    },
-    app: null,
-    objProxy: null,
-    listNotificationInterests: function(){
-      return [
-      ];
-    },
-    handleNotification: function( note ) {
-      switch ( note.getName() )
-      {
-      }
-    } 
+    }
   } 
 );
 ProxySliderMediator.NAME = "ProxySliderMediator";
@@ -120,26 +119,13 @@ dojo.declare
 ("ProxyChanger", Facade,
   {
     constructor: function(){
-      console.log("Constructing ProxyChanger");
-      this.components = {};
       this.initializeFacade();
-      console.log("ProxyChanger Constructed");
     },
-    components: null,
     start: function(){
-      console.log("Starting ProxyChanger");
       this.registerCommand(ProxyChanger.INIT, InitProxyChanger);
       this.sendNotification(ProxyChanger.INIT, this, "Object");
+      this.registerCommand(ProxySliderMediator.PROXY_SLIDER_CHANGED, UpdateFavoriteObjectCommand);
       console.log("ProxyChanger Running");
-    },
-    add: function(id, obj){
-      this.components[id] = obj;
-    },
-    get: function(id){
-      return this.components[id];
-    },
-    remove: function(id){
-      delete this.components[id];
     }
   }
 );
