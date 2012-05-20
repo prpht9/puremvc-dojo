@@ -36,7 +36,7 @@ dojo.declare
     },
     components: null,
     start: function(){
-      //this.registerMediator(new BlockSliderMediator(BlockSliderMediator.NAME, this.get('block-slider')));
+      //this.registerMediator(new BlockSliderMediator(BlockSliderMediator.NAME, dojo.byId('block-slider')));
       console.log("MyApp Running");
     }
   }
@@ -75,16 +75,7 @@ dojo.declare
       dojo.connect(viewComponent, "onChange", function(evt){
         app.sendNotification(SliderMediator.SLIDER_CHANGED, evt);
       });
-    },
-    listNotificationInterests: function(){
-      return [
-      ];
-    },
-    handleNotification: function( note ) {
-      switch ( note.getName() )
-      {
-      }
-    } 
+    }
   } 
 );
 SliderMediator.NAME = "SliderMediator";
@@ -118,28 +109,13 @@ dojo.declare
 ("BlockSlider", Facade,
   {
     constructor: function(){
-      console.log("Constructing BlockSlider");
-      this.components = {};
       this.initializeFacade();
-      console.log("BlockSlider Constructed");
     },
     components: null,
     start: function(){
-      console.log("Starting BlockSlider");
-      this.add('moving-block', dojo.byId('moving-block'));
-      this.add('block-slider', dijit.byId('block-slider'));
-      this.registerMediator(new BlockMediator(BlockMediator.NAME, this.get('moving-block')));
-      this.registerMediator(new SliderMediator(SliderMediator.NAME, this.get('block-slider')));
+      this.registerMediator(new BlockMediator(BlockMediator.NAME, dojo.byId('moving-block')));
+      this.registerMediator(new SliderMediator(SliderMediator.NAME, dijit.byId('block-slider')));
       console.log("BlockSlider Running");
-    },
-    add: function(id, obj){
-      this.components[id] = obj;
-    },
-    get: function(id){
-      return this.components[id];
-    },
-    remove: function(id){
-      delete this.components[id];
     }
   }
 );
