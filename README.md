@@ -32,24 +32,12 @@ dojo.declare
 ("MyApp", Facade,
   {
     constructor: function(){
-      this.components = {};
       this.initializeFacade();
-      console.log("MyApp Constructed");
     },
     components: null,
     start: function(){
-      //this.add('block-slider', dijit.byId('block-slider'));
       //this.registerMediator(new BlockSliderMediator(BlockSliderMediator.NAME, this.get('block-slider')));
       console.log("MyApp Running");
-    },
-    add: function(id, obj){
-      this.components[id] = obj;
-    },
-    get: function(id){
-      return this.components[id];
-    },
-    remove: function(id){
-      delete this.components[id];
     }
   }
 );
